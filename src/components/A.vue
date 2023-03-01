@@ -1,5 +1,6 @@
 <script setup lang="ts">
 interface IAProps {
+  id?: string,
   ele?: string,
   desc: {
     col: string
@@ -20,6 +21,6 @@ const props = withDefaults(defineProps<IAProps>(), {
 
 <template>
   <div class="a-base">
-    <AChild v-bind="$attrs" />
+    <AChild v-bind="$attrs" :key="`AChild_${props.id}`" />
   </div>
 </template>

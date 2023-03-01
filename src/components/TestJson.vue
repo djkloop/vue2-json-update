@@ -1,9 +1,10 @@
 <script lang="ts" setup>
-import { ref, set, nextTick } from 'vue';
+import { ref, set } from 'vue';
 
 
 const testJson = ref([
   {
+    id: "f1",
     ele: 'A',
     attrs: {
       class: "A-class"
@@ -13,6 +14,7 @@ const testJson = ref([
     }
   },
   {
+    id: "f2",
     ele: 'B',
     attrs: {
       class: "B-class"
@@ -22,6 +24,7 @@ const testJson = ref([
     },
   },
   {
+    id: "f3",
     ele: 'B',
     attrs: {
       class: "B-class"
@@ -31,6 +34,7 @@ const testJson = ref([
     },
     children: [
       {
+        id: "f3-1",
         ele: 'A',
         attrs: {
           class: "A-C1-class"
@@ -43,11 +47,16 @@ const testJson = ref([
   }
 ])
 
+let index = 999;
+
 const randomClass = (ele: string) => `${Math.random()}_class_${ele}`
+const randomId = (ele: string) => `f${index++}_${ele}`
+
 
 const addMainDesc = () => {
   // 在加进去一个主的
   testJson.value.push({
+    id: randomId('A'),
     ele: 'A',
     attrs: {
       class: "A-CC-class"
@@ -62,6 +71,7 @@ const addChildDesc = () => {
   // 在加进去一个子的
   if (testJson.value[2]?.children) {
     testJson.value[2].children.push({
+      id: randomId('B'),
       ele: 'B',
       attrs: {
         class: randomClass("B")
@@ -86,7 +96,8 @@ const useSetDesc = () => {
 <template>
   <div>
     <div v-for="(item, index) in testJson" :key="item.ele + '_' + index">
-      <component :is="item.ele" v-bind="item.attrs" :attrs="item.attrs" :desc="item.desc" :children="item.children" />
+      <component :is="item.ele" :id="item.id" :key="item.id" v-bind="item.attrs" :attrs="item.attrs" :desc="item.desc"
+        :children="item.children" :ele="item.ele" />
     </div>
     <button @click="useSetDesc">修改desc</button>
     <button @click="addMainDesc">增加主</button>
