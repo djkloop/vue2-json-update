@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { onUpdated } from 'vue';
+
 interface IBProps {
   id?: string,
   ele?: string,
@@ -15,6 +17,10 @@ const props = withDefaults(defineProps<IBProps>(), {
   desc: () => ({ col: '1' }),
   attrs: () => ({ class: 'B--CLASS' }),
   children: () => []
+})
+
+onUpdated(() => {
+  console.log('B updated')
 })
 
 </script>

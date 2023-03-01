@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { onUpdated } from 'vue';
+
 interface IAProps {
   id?: string,
   ele?: string,
@@ -13,6 +15,10 @@ interface IAProps {
 const props = withDefaults(defineProps<IAProps>(), {
   desc: () => ({ col: '1' }),
   attrs: () => ({ class: 'A--CLASS' })
+})
+
+onUpdated(() => {
+  console.log('A updated')
 })
 
 
